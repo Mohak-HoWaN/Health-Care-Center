@@ -1,6 +1,6 @@
 ﻿Disease,Medicine
 Fungal infection,"['Flucos by Cipla | Dosage - (T1-0-0-0) | # Tablet taken once daily for fungal infections.',
-    'Sebifin by Sun Pharma | Dosage - (T1-0-0-0) | # Tablet taken once daily.',
+    'sebifin by Sun Pharma | Dosage - (T1-0-0-0) | # Tablet taken once daily.',
     'Candid by Glenmark | Dosage - (O1-O1-0-O1) | # Cream applied morning, afternoon, and night.',
     'Nizoral by Johnson & Johnson | Dosage - (O1-0-0-O1) | # Cream applied morning and night.'
 ]"
@@ -42,7 +42,7 @@ Gastroenteritis,"['Amoxicillin by Amoxil | Dosage - (T1-T1-T1-0) | # Commonly ta
     'Granisetron by Granicip | Dosage - (T1-0-T1-0) | # Often 1 mg twice daily before meals for nausea.',
     'Loperamide by Lopamide | Dosage - (T1-0-0-0) | # Typically taken once daily, as needed for diarrhea control.'
 ]"
-Bronchial Asthma,"['Salbutamol by Asthalin | Dosage - (I1-0-I1-0) | # Inhaler: 1-2 puffs as needed, typically twice daily for asthma relief.',
+Bronchial Asthma,"[salbutamol by Asthalin | Dosage - (I1-0-I1-0) | # Inhaler: 1-2 puffs as needed, typically twice daily for asthma relief.',
     'Budesonide by Budecort | Dosage - (I1-0-I1-0) | # Inhaler: 1-2 puffs twice daily for anti-inflammatory control in asthma.',
     'Zafirlukast by Accolate | Dosage - (T1-0-0-0) | # Tablet: 10-20 mg once daily, often at bedtime, to manage asthma symptoms.',
     'Cromolyn Sodium by Cromal | Dosage - (I1-I1-0-0) | # Inhaler or nebulizer: typically 1 puff/inhalation twice daily.',
@@ -54,7 +54,7 @@ Hypertension,"['Telmisartan by Telma | Dosage - (T1-0-0-0) | # Tablet: 20-40 mg 
     'Enalapril by Enapril | Dosage - (T1-0-0-0) | # Tablet: 5-10 mg once daily, typically for blood pressure management.'
 ]"
 Migraine,"['Paracetamol by Crocin | Dosage - (T1-T1-T1-0) | # Tablet: 500 mg to 650 mg every 4-6 hours as needed for pain or fever relief (max 4 doses per day).',
-    'Sumatriptan by Suminat | Dosage - (T1-0-0-0) | # Tablet: 50-100 mg as a single dose for acute migraine, up to a maximum of 200 mg in 24 hours.',
+    sumatriptan by Suminat | Dosage - (T1-0-0-0) | # Tablet: 50-100 mg as a single dose for acute migraine, up to a maximum of 200 mg in 24 hours.',
     'Topiramate by Topaz | Dosage - (0-T1-0-T1) | # Tablet: Gradually increased to 50-100 mg twice daily for migraine prevention.'
 ]"
 Cervical spondylosis,"['Paracetamol by Crocin | Dosage - (T1-T1-T1-0) | # Tablet: 500 mg every 4-6 hours as needed, up to 3-4 times per day.',
@@ -129,7 +129,7 @@ Dimorphic hemmorhoids(piles),"['Nitroglycerin by Nitrocontin | Dosage - (T1-0-0-
     'Aspirin by Ecosprin | Dosage - (T1-T1-0-0) | # Tablet: 75 mg to 150 mg once daily for prevention of heart attacks, strokes, or blood clot formation.',
     'Metoprolol by Metocard | Dosage - (T1-T1-0-0) | # Tablet: 25 mg to 100 mg once or twice daily for hypertension, angina, or heart failure.',
     'Amlodipine by Amlong | Dosage - (T1-0-0-0) | # Tablet: 5 mg to 10 mg once daily for hypertension and angina.',
-    'Streptokinase by Streptase | Dosage - (I1-I1-0-0) | # Injection: 1.5 million IU IV infusion over 60 minutes for acute myocardial infarction (heart attack).'
+    'streptokinase by Streptase | Dosage - (I1-I1-0-0) | # Injection: 1.5 million IU IV infusion over 60 minutes for acute myocardial infarction (heart attack).'
 ]"
 Heart attack,['Immediate treatment required at the nearest hospital!']
 Varicose veins,"['Levothyroxine by Thyronorm | Dosage - (T1-0-0-0) | # Tablet: 25 mcg to 100 mcg once daily for hypothyroidism, adjusted based on thyroid hormone levels.',
@@ -147,7 +147,7 @@ Hyperthyroidism,"['Glucon-D | Dosage - (P1-0-0-0) | # Powder: 1-2 teaspoons diss
 Hypoglycemia,"['Paracetamol by Crocin | Dosage - (T1-0-0-T1)  # Tablet: 500 mg to 1000 mg every 4-6 hours as needed for pain or fever relief, not exceeding 4000 mg in 24 hours.']"
 Osteoarthristis,"['Ibuprofen by Brufen | Dosage - (T1-T1-0-T1) | # Tablet: 200 mg to 400 mg every 4-6 hours as needed for pain or inflammation, not exceeding 1200 mg per day.',
     'Hydroxychloroquine by Plaquenil | Dosage - (T1-T1-0-0) | # Tablet: 200 mg to 400 mg daily for malaria or autoimmune diseases (e.g., lupus, rheumatoid arthritis).',
-    'Infliximab by Remicade | Dosage - (I1-0-0-0) | # Infusion: 3 mg/kg body weight, typically administered every 6 to 8 weeks for autoimmune diseases like rheumatoid arthritis or Crohn's disease.',
+    'Infliximab by Remicade | Dosage - (I1-0-0-0) | # Infusion: 3 mg/kg body weight, typically administered every 6 to 8 weeks for autoimmune diseases like rheumatoid arthritis or Crohns disease.',
     'Hydrocortisone by Cortef | Dosage - (T1-T1-0-T1) | # Tablet: 20 mg to 50 mg daily, divided into 2-3 doses, for conditions like adrenal insufficiency or inflammation.'
 ]"
 Arthritis,"['Meclizine by Vertin | Dosage - (T1-0-0-T1) | # Tablet: 25 mg to 50 mg once daily for motion sickness, vertigo, or nausea.',
@@ -167,7 +167,7 @@ Urinary tract infection,"['Amoxicillin by Mox | Dosage - (T1-T1-0-T1) | # Tablet
     'Paracetamol by Crocin | Dosage - (T1-0-0-T1) | # Tablet: 500 mg to 1000 mg every 4-6 hours as needed for pain or fever relief, not exceeding 4000 mg in 24 hours.',
     'Cetirizine by Zyrtec | Dosage - (T1-0-0-T1) | # Tablet: 10 mg once daily for allergies, hay fever, or rhinitis.',
     'Prednisolone by Predmet | Dosage - (T1-T1-0-T1) | # Tablet: 5 mg to 60 mg daily, divided into 2-3 doses, for inflammatory conditions, allergies, or autoimmune diseases.',
-    'Clotrimazole by Candid | Dosage - (O1-0-0-0) |  # Ointment: Apply a thin layer to the affected area 1-2 times daily for fungal infections (e.g., athlete's foot, ringworm, vaginal infections).'
+    'Clotrimazole by Candid | Dosage - (O1-0-0-0) |  # Ointment: Apply a thin layer to the affected area 1-2 times daily for fungal infections (e.g., athletes foot, ringworm, vaginal infections).'
 ]"
 Psoriasis,"['Amoxicillin by Mox | Dosage - (T1-T1-0-T1) | # Tablet: 500 mg to 1000 mg every 8 hours for bacterial infections.',
     'Flavoxate by Bladderon | Dosage - (T1-T1-0-T1) | # Tablet: 100 mg to 200 mg every 8 hours for urinary tract disorders or bladder spasms.',
@@ -177,5 +177,5 @@ Psoriasis,"['Amoxicillin by Mox | Dosage - (T1-T1-0-T1) | # Tablet: 500 mg to 10
 Impetigo,"['Clobetasol by Tenovate | Dosage - (O1-0-0-0) | # Ointment: Apply a thin layer to the affected area 1-2 times daily for inflammatory skin conditions.',
     'Methoxsalen by 8-MOP | Dosage - (T1-0-0-T1) | # Tablet: 10 mg to 40 mg before UV exposure, typically 1 to 2 hours prior to treatment, for psoriasis.',
     'Methotrexate by Trexall | Dosage - (T1-0-0-T1) | # Tablet: 7.5 mg to 25 mg once a week for rheumatoid arthritis or cancer treatment, dosage may vary based on condition.',
-    'Adalimumab by Humira | Dosage - (I1-0-0-I1) | # Injection: 40 mg subcutaneously every other week for autoimmune diseases like rheumatoid arthritis, Crohn's disease, etc.'
+    'Adalimumab by Humira | Dosage - (I1-0-0-I1) | # Injection: 40 mg subcutaneously every other week for autoimmune diseases like rheumatoid arthritis, Crohns disease'
 ]"
