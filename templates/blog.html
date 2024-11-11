@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Blog</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  </head>
+  <style>
+    .navbar-nav .nav-item .nav-link {
+      transition: color 0.3s, background-color 0.3s;
+      padding: 10px 15px; /* Consistent padding for all nav items */
+      margin: 5px;
+      margin-top: 5px;
+    }
+
+    .navbar-nav .nav-item .nav-link:hover,
+    .navbar-nav .nav-item .nav-link.active {
+      background-color: #66CDAA;
+      border-radius: 5px;
+    }
+
+    .search-input, .search-button {
+      font-size: 16px; /* Consistent font */
+      border-radius: 5px; /* Consistent styling */
+    }
+
+    .search-button {
+      margin: 0;
+      padding: 5px; /* Consistent padding */
+    }
+
+    .search-input {
+      max-width: 200px; /* Set according to your navbar layout */
+      margin: 0;
+      padding: 5px; /* Consistent padding */
+    }
+
+    .navbar {
+      height: 60px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: shadow for separation */ /* Adjust to match your design */
+      padding: 0;
+    }
+
+    .nav-link.active {
+      color: #f1f8f5;
+      background-color: #66CDAA;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+
+    .nav-link:hover {
+      color: #f1f8f5;
+      background-color: #66CDAA;
+      border-radius: 5px;
+    }
+
+    .myimg:hover {
+      transform: scale(1.1);
+    }
+
+    .logo{
+      width:60px;
+      height:50px;
+      colour:black;
+      margin-top:0;
+      margin-left:2;
+    }
+
+    .myimg{
+      width:50px;
+      height:50px;
+      border: 2px solid black;
+      border-radius:25px;
+    }
+
+    .form-control {
+      border: 2px solid #4CAF50; /* Green border for the input */
+      background-color: #f1f8f5; /* Slightly light green background */
+      color: #333; /* Dark text for readability */
+    }
+
+    .form-control::placeholder {
+      color: #6c757d; /* Slightly grey placeholder text */
+    }
+
+    .btn-success {
+      background-color: #66CDAA; /* Match button background with theme */
+      border-color: #66CDAA; /* Match button border */
+    }
+
+    .btn-success:hover {
+      background-color: #66CDAA; /* Darker green on hover */
+      border-color: #66CDAA;
+    }
+
+    .search-input:hover {
+      border-color: #4B9CD3; /* Change border color on hover */
+      box-shadow: 0 0 8px rgba(75, 156, 211, 0.5); /* Subtle shadow for emphasis */
+    }
+
+    .search-button:hover {
+      background-color: #4B9CD3; /* Change button color on hover */
+      color: white; /* Change text color on hover */
+      transform: scale(1.05); /* Slightly enlarge button on hover */
+      transition: all 0.3s ease-in-out; /* Smooth transition for hover effect */
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .header {
+      text-align: center;
+      padding: 40px 0;
+    }
+    .header h1 {
+      font-size: 2.5em;
+      color: #4CAF50;
+    }
+    .blog-post {
+      background-color: #fff;
+      margin-bottom: 20px;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+    .blog-post:hover {
+      transform: translateY(-5px);
+    }
+    .blog-post h2 {
+      font-size: 1.8em;
+      color: #4CAF50;
+    }
+    .blog-post p {
+      font-size: 1.1em;
+      line-height: 1.6;
+    }
+    .blog-post .date {
+      font-size: 0.9em;
+      color: #888;
+      margin-bottom: 10px;
+    }
+    .read-more {
+      display: inline-block;
+      margin-top: 15px;
+      color: #4CAF50;
+      font-weight: bold;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .read-more:hover {
+      color: #388e3c;
+    }
+  </style>
+  <body>
+  <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #4B9CD3;">
+  <div class="container-fluid">
+    <div class="logo">
+      <img class="myimg" src="{{url_for('static', filename='img.png')}}" alt="">
+    </div>
+     <a class="navbar-brand">Health Center</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0 mx-auto py-4px">
+        <li class="nav-item">
+          <a class="nav-link {% if current_page == 'home' %}active{% endif %}" href="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% if current_page == 'about' %}active{% endif %}" href="/about">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% if current_page == 'contact' %}active{% endif %}" href="/contact">Contact</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% if current_page == 'developer' %}active{% endif %}" href="/developer">Developer</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% if current_page == 'blog' %}active{% endif %}" href="/blog">Blog</a>
+        </li>
+      </ul>
+      <form class="d-flex" role="search">
+        <input class="form-control me-2 search-input" type="search" placeholder="Search" aria-label="Search" style="border: 2px solid #66CDAA;">
+        <button class="btn btn-success search-button" style="color: black;" type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+  </nav>
+  <div class="container">
+    <div class="header">
+      <h1>Our Blog</h1>
+      <p>Stay updated with the latest health tips, news, and wellness advice from our team of experts.</p>
+    </div>
+
+    <!-- Blog Post 1 -->
+    <div class="blog-post">
+      <h2>Understanding Preventive Healthcare</h2>
+      <p class="date">Published on October 25, 2024</p>
+      <p>Preventive healthcare is essential to maintaining long-term wellness. Discover the benefits and practices to keep yourself healthy and avoid potential health risks...</p>
+      <a href="/blog/understanding-preventive-healthcare" class="read-more">Read More</a>
+    </div>
+
+    <!-- Blog Post 2 -->
+    <div class="blog-post">
+      <h2>Top 10 Tips for a Balanced Diet</h2>
+      <p class="date">Published on September 15, 2024</p>
+      <p>Eating a balanced diet is crucial for good health and well-being. Learn about the essential nutrients, foods to include, and tips for creating a diet plan that works for you...</p>
+      <a href="/blog/balanced-diet-tips" class="read-more">Read More</a>
+    </div>
+
+    <!-- Blog Post 3 -->
+    <div class="blog-post">
+      <h2>The Importance of Regular Exercise</h2>
+      <p class="date">Published on August 10, 2024</p>
+      <p>Regular physical activity benefits both the mind and body. Explore the reasons why staying active is critical for overall health, and find tips on making exercise a regular part of your life...</p>
+      <a href="/blog/importance-of-regular-exercise" class="read-more">Read More</a>
+    </div>
+
+    <!-- Additional blog posts can be added here -->
+
+  </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  </body>
+</html>
