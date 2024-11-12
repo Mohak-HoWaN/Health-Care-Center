@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, send_from_directory
 import numpy as np
 import pandas as pd
 import pickle
@@ -110,6 +110,10 @@ def predict():
             my_links.append(l)
 
         return render_template('index.html', predicted_disease=predicted_disease, dis_des=desc, dis_pre=my_pre, dis_med=med_list, dis_wk=wokout, dis_diet=dis_diet_list, dis_medicine=medicine_list, dis_links=my_links)
+
+@app.route('/download/offline_version')
+def download_offline_version():
+    return send_from_directory(directory='static', path='offline_version.zip', as_attachment=True)
 
 @app.route('/about')
 def about():
