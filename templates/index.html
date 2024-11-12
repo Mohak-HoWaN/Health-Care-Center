@@ -116,37 +116,106 @@
     /* Custom styling for the checkboxes */
     /* Base styling for the checkbox buttons */
     .checkbox-button {
-      display: inline-block;
-      margin: 5px;
-      padding: 10px 20px;
-      background-color: #007bff; /* Blue background */
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 14px;
-      transition: background-color 0.3s ease, border-color 0.3s ease; /* Smooth transition */
+        display: inline-block;
+        margin: 8px;
+        padding: 12px 24px;
+        background-color: #007bff; /* Blue background */
+        color: white;
+        border: 2px solid transparent;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 15px;
+        transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        text-align: center;
     }
 
-    /* Styling when the button is selected */
+    /* Selected State */
     .checkbox-button.selected {
-      background-color: #0056b3; /* Darker blue background */
-      border-color: #004085; /* Darker border */
+        background-color: #0056b3; /* Darker blue background */
+        border-color: #004085; /* Darker border */
+        color: #e2eafc; /* Lighter text for contrast */
+        box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        transform: scale(1.05); /* Slightly larger when selected */
     }
 
-    /* Hover effect for the buttons */
+    /* Hover State */
     .checkbox-button:hover {
-      background-color: #0056b3; /* Dark blue on hover */
-      border-color: #004085; /* Darker border on hover */
+        background-color: #0056b3; /* Dark blue on hover */
+        border-color: #004085; /* Darker border on hover */
+        box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+        transform: translateY(-2px); /* Slight lift on hover */
     }
 
-    /* Additional styling for the input field */
+    /* Focus State */
+    .checkbox-button:focus {
+        outline: none;
+        border-color: #28a745; /* Green border on focus */
+        box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.5); /* Soft green glow on focus */
+    }
+
+    /* Form Control Styles (e.g., input fields) */
     .form-control {
-      width: 100%;
-      padding: 10px;
-      margin-top: 20px;
-      margin-bottom: 20px;
-      font-size: 16px;
+        width: 100%;
+        padding: 14px; /* Increased padding for a more comfortable size */
+        margin: 20px 0;
+        font-size: 16px;
+        border-radius: 6px; /* Slightly larger radius for a smoother look */
+        border: 1px solid #ccc;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    /* Focus State for Form Control */
+    .form-control:focus {
+        outline: none;
+        border-color: #007bff; /* Blue border on focus */
+        box-shadow: 0 0 8px rgba(0, 123, 255, 0.5); /* Blue glow with more intensity */
+    }
+
+    /* Additional Styling for Category and Symptom Layout */
+    .category-container {
+        background-color: #f8f9fa; /* Light background */
+        padding: 16px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .category-title {
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 10px;
+        padding: 8px;
+        background-color: #66CDAA; /* Blue background for category title */
+        color: black;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .category-title:hover {
+        background-color: #0056b3; /* Darker blue on hover */
+    }
+
+    .symptoms-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px; /* Add spacing between buttons */
+        margin-top: 10px;
+    }
+
+    .checkbox-button {
+        display: inline-block;
+        padding: 12px 24px;
+        background-color: #007bff;
+        color: white;
+        border: 2px solid transparent;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 15px;
+        transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        text-align: center;
     }
 
   </style>
@@ -196,83 +265,145 @@
       </div>
       <div id="checkbox-container"></div>
       <script>
-            // Your JavaScript for dynamically creating buttons
-            function createCheckboxes(symptoms_dict) {
+        const symptomsDict = {
+          "Skin and Hair": {
+              "itching": 0, "skin_rash": 1, "nodal_skin_eruptions": 2, "red_spots_over_body": 99,
+              "pus_filled_pimples": 122, "blackheads": 123, "scarring": 124, "skin_peeling": 125,
+              "silver_like_dusting": 126, "small_dents_in_nails": 127, "inflammatory_nails": 128
+          },
+          "Respiratory": {
+              "continuous_sneezing": 3, "shivering": 4, "chills": 5, "cough": 24, "high_fever": 25,
+              "breathlessness": 27, "phlegm": 50, "throat_irritation": 51, "runny_nose": 54, "congestion": 55
+          },
+          "Digestive": {
+              "stomach_pain": 7, "acidity": 8, "vomiting": 11, "diarrhoea": 40, "constipation": 38,
+              "abdominal_pain": 39, "belly_pain": 100, "loss_of_appetite": 112, "indigestion": 119
+          },
+          "Cardiovascular": {
+              "chest_pain": 13, "fast_heart_rate": 97
+          },
+          "Musculoskeletal": {
+              "joint_pain": 6, "muscle_weakness": 125, "painful_walking": 136
+          },
+          "General Symptoms": {
+              "fatigue": 12, "weight_loss": 14, "restlessness": 104, "lethargy": 121,
+              "malaise": 120, "swelling_of_stomach": 135, "weakness_of_one_body_side": 141
+          },
+          "Neurological": {
+              "headache": 9, "dizziness": 61, "loss_of_balance": 133, "slurred_speech": 144
+          },
+          "Psychological": {
+              "mood_swings": 60, "anxiety": 68, "irritability": 85, "depression": 117
+          },
+          "Urinary": {
+              "bladder_discomfort": 96, "foul_smell_of_urine": 129, "continuous_feel_of_urine": 130
+          },
+          "Reproductive": {
+              "spotting_urination": 100, "pain_during_urination": 106, "yellow_urination": 123
+          },
+          "Endocrine": {
+              "increased_appetite": 98, "sweating": 28, "weight_gain": 21, "polyuria": 147
+          },
+          "Vision": {
+              "blurred_and_distorted_vision": 102, "redness_of_eyes": 107, "sinus_pressure": 110,
+              "swollen_eyes": 111, "visual_disturbances": 113
+          },
+          "Hearing and Ear": {
+              "ear_pain": 53, "ear_discharge": 89, "ringing_in_ears": 90
+          },
+          "Lymphatic": {
+              "swelled_lymph_nodes": 56
+          },
+          "Metabolic": {
+              "loss_of_smell": 19, "muscle_pain": 123, "high_fever": 25
+          }
+      };
+
+            // Function to create symptom buttons dynamically based on selected category
+            function createCheckboxes(symptomsDict) {
             const container = document.getElementById("checkbox-container");
 
-            // Loop through each symptom and create a button
-            Object.entries(symptoms_dict).forEach(([symptom, id]) => {
-            const button = document.createElement('button');
-            button.classList.add('checkbox-button');
-            button.textContent = symptom;
-            button.setAttribute('data-id', id); // Storing the symptom ID (if needed later)
+            // Loop through each category
+            Object.entries(symptomsDict).forEach(([category, symptoms]) => {
+                // Create a category container
+                const categoryContainer = document.createElement('div');
+                categoryContainer.classList.add('category-container');
 
-            // Add an event listener for button click
-            button.addEventListener('click', (event) => {
-                // Prevent the page refresh from form submission
-                event.preventDefault();
+                // Create a category title that can be clicked to toggle symptoms
+                const categoryTitle = document.createElement('h3');
+                categoryTitle.classList.add('category-title');
+                categoryTitle.textContent = category;
 
-                // Toggle the "selected" class for button styling (change 'selected' to 'active' if needed)
-                button.classList.toggle('selected');
+                // Add click event to toggle visibility of symptoms
+                categoryTitle.addEventListener('click', () => {
+                    categorySymptomsContainer.classList.toggle('hidden');
+                });
 
-                // Get the input field where symptoms will be displayed
-                const symptomsInput = document.getElementById("symptoms");
-                let currentSymptoms = symptomsInput.value.split(',').map(item => item.trim()).filter(Boolean);
-                const symptomName = button.textContent; // Get the symptom name from the button text
+                // Create a container for symptoms in this category
+                const categorySymptomsContainer = document.createElement('div');
+                categorySymptomsContainer.classList.add('symptoms-container');
 
-                // Check if button is selected and update input field accordingly
-                if (button.classList.contains('selected')) {
-                    // Add symptom to the list if it's not already present
-                    if (!currentSymptoms.includes(symptomName)) {
-                        currentSymptoms.push(symptomName);
-                    }
-                } else {
-                    // Remove symptom from the list if it's deselected
-                    currentSymptoms = currentSymptoms.filter(item => item !== symptomName);
-                }
+                // Create a button for each symptom in the category
+                Object.entries(symptoms).forEach(([symptom, id]) => {
+                    const button = document.createElement('button');
+                    button.classList.add('checkbox-button');
+                    button.textContent = symptom;
+                    button.setAttribute('data-id', id);
 
-                // Update the input field with the selected symptoms, separated by commas
-                symptomsInput.value = currentSymptoms.join(', ');
+                    // Add event listener for the button click
+                    button.addEventListener('click', (event) => {
+                        event.preventDefault();
+                        button.classList.toggle('selected');
+
+                        const symptomsInput = document.getElementById("symptoms");
+                        let currentSymptoms = symptomsInput.value.split(',').map(item => item.trim()).filter(Boolean);
+                        const symptomName = button.textContent;
+
+                        if (button.classList.contains('selected')) {
+                            if (!currentSymptoms.includes(symptomName)) {
+                                currentSymptoms.push(symptomName);
+                            }
+                        } else {
+                            currentSymptoms = currentSymptoms.filter(item => item !== symptomName);
+                        }
+
+                        symptomsInput.value = currentSymptoms.join(', ');
+                        updateProceedButtonState(); // Update button state based on selections
+                    });
+
+                    // Append the button to the symptoms container
+                    categorySymptomsContainer.appendChild(button);
+                });
+
+                // Append category title and symptoms container to the category container
+                categoryContainer.appendChild(categoryTitle);
+                categoryContainer.appendChild(categorySymptomsContainer);
+                container.appendChild(categoryContainer);
             });
-
-            // Append the button to the container
-            container.appendChild(button);
-        });
         }
-        // Call the function to create symptom buttons when the page loads
+
+        // Function to update proceed button state based on selected symptoms
+        function updateProceedButtonState() {
+            const symptomsInput = document.getElementById("symptoms");
+            const symptomCount = symptomsInput.value.split(',').map(item => item.trim()).filter(Boolean).length;
+            const proceedBtn = document.getElementById("proceed-btn");
+            proceedBtn.disabled = symptomCount < 3;
+        }
+
+        // Initialize the creation of checkboxes on page load
         document.addEventListener('DOMContentLoaded', () => {
-          let symptoms_dict = {
-              'itching': 0, 'skin_rash': 1, 'nodal_skin_eruptions': 2, 'continuous_sneezing': 3, 'shivering': 4, 'chills': 5, 'joint_pain': 6, 'stomach_pain': 7, 'acidity': 8,
-              'ulcers_on_tongue': 9, 'muscle_wasting': 10, 'vomiting': 11, 'burning_micturition': 12, 'spotting_urination': 13, 'fatigue': 14, 'weight_gain': 15, 'anxiety': 16,
-              'cold_hands_and_feets': 17, 'mood_swings': 18, 'weight_loss': 19, 'restlessness': 20, 'lethargy': 21, 'patches_in_throat': 22, 'irregular_sugar_level': 23, 'cough': 24,
-              'high_fever': 25, 'sunken_eyes': 26, 'breathlessness': 27, 'sweating': 28, 'dehydration': 29, 'indigestion': 30, 'headache': 31, 'yellowish_skin': 32, 'dark_urine': 33,
-              'nausea': 34, 'loss_of_appetite': 35, 'pain_behind_the_eyes': 36, 'back_pain': 37, 'constipation': 38, 'abdominal_pain': 39, 'diarrhoea': 40, 'mild_fever': 41,
-              'yellow_urine': 42, 'yellowing_of_eyes': 43, 'acute_liver_failure': 44, 'fluid_overload': 45, 'swelling_of_stomach': 46, 'swelled_lymph_nodes': 47, 'malaise': 48,
-              'blurred_and_distorted_vision': 49, 'phlegm': 50, 'throat_irritation': 51, 'redness_of_eyes': 52, 'sinus_pressure': 53, 'runny_nose': 54, 'congestion': 55, 'chest_pain': 56,
-              'weakness_in_limbs': 57, 'fast_heart_rate': 58, 'pain_during_bowel_movements': 59, 'pain_in_anal_region': 60, 'bloody_stool': 61, 'irritation_in_anus': 62, 'neck_pain': 63,
-              'dizziness': 64, 'cramps': 65, 'bruising': 66, 'obesity': 67, 'swollen_legs': 68, 'swollen_blood_vessels': 69, 'puffy_face_and_eyes': 70, 'enlarged_thyroid': 71,
-              'brittle_nails': 72, 'swollen_extremeties': 73, 'excessive_hunger': 74, 'extra_marital_contacts': 75, 'drying_and_tingling_lips': 76, 'slurred_speech': 77, 'knee_pain': 78,
-              'hip_joint_pain': 79, 'muscle_weakness': 80, 'stiff_neck': 81, 'swelling_joints': 82, 'movement_stiffness': 83, 'spinning_movements': 84, 'loss_of_balance': 85,
-              'unsteadiness': 86, 'weakness_of_one_body_side': 87, 'loss_of_smell': 88, 'bladder_discomfort': 89, 'foul_smell_of_urine': 90, 'continuous_feel_of_urine': 91, 'passage_of_gases': 92,
-              'internal_itching': 93, 'toxic_look_(typhos)': 94, 'depression': 95, 'irritability': 96, 'muscle_pain': 97, 'altered_sensorium': 98, 'red_spots_over_body': 99, 'belly_pain': 100,
-              'abnormal_menstruation': 101, 'dischromic_patches': 102, 'watering_from_eyes': 103, 'increased_appetite': 104, 'polyuria': 105, 'family_history': 106, 'mucoid_sputum': 107,
-              'rusty_sputum': 108, 'lack_of_concentration': 109, 'visual_disturbances': 110, 'receiving_blood_transfusion': 111, 'receiving_unsterile_injections': 112, 'coma': 113,
-              'stomach_bleeding': 114, 'distention_of_abdomen': 115, 'history_of_alcohol_consumption': 116, 'fluid_overload.1': 117, 'blood_in_sputum': 118, 'prominent_veins_on_calf': 119,
-              'palpitations': 120, 'painful_walking': 121, 'pus_filled_pimples': 122, 'blackheads': 123, 'scurring': 124, 'skin_peeling': 125, 'silver_like_dusting': 126, 'small_dents_in_nails': 127,
-              'inflammatory_nails': 128, 'blister': 129, 'red_sore_around_nose': 130, 'yellow_crust_ooze': 131
-          };
+            createCheckboxes(symptomsDict);
 
-          createCheckboxes(symptoms_dict);
+            const proceedBtn = document.getElementById("proceed-btn");
+            proceedBtn.disabled = true; // Disable initially
 
-          // Handle the Proceed button action (if any)
-          document.getElementById("proceed-btn").addEventListener("click", () => {
-          alert("Proceeding with selected symptoms.");
-          });
-
-          // Ensure that the symptom input field is reset on page load
-          const symptomsInput = document.getElementById("symptoms");
-          symptomsInput.value = ""; // Reset selected symptoms to empty
-      });
+            // Handle proceed button click
+            proceedBtn.addEventListener("click", () => {
+                if (!proceedBtn.disabled) {
+                    alert("Proceeding with selected symptoms.");
+                }
+            });
+        });
       </script>
 
       <br>
@@ -280,9 +411,9 @@
 
       <!-- Rotating warning line below the Proceed button -->
       <marquee style="background-color: red; color: white; font-weight: bold; padding: 10px; font-size: 1em; border-radius: 5px">
-        <!--<img src="{{ url_for('static', filename='warning-sign.svg') }}" alt="Warning" style="height: 1.3em; vertical-align: middle; margin-right: 0px;">-->
-        Contact the nearest physician for more details
-        <!--<img src="{{ url_for('static', filename='warning-sign.svg') }}" alt="Warning" style="height: 1.3em; vertical-align: middle; margin-right: 0px;">-->
+        <img src="{{ url_for('static', filename='warning-sign.svg') }}" alt="Warning" style="height: 1.3em; vertical-align: middle; margin-right: 0px;">
+        Contact the nearest doctor for more details
+        <img src="{{ url_for('static', filename='warning-sign.svg') }}" alt="Warning" style="height: 1.3em; vertical-align: middle; margin-right: 0px;">
       </marquee>
     </form>
   </div>
