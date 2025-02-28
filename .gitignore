@@ -1,1 +1,6 @@
 venv
+.idea
+__pycache__
+Medicine recommendation system.zip
+Medicine recommendation system v0.2.zip
+Visulization for SVM.png
