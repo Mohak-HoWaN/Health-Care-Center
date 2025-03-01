@@ -521,40 +521,40 @@
           "loss_of_smell": 19, "muscle_pain": 123, "high_fever": 25
       }
     };
-
+  
     // Flatten symptoms for autocompletion
     const symptomsList = Object.values(symptomsDict).flatMap(category => Object.keys(category));
-
+  
     function createCheckboxes(symptomsDict) {
       const container = document.getElementById("checkbox-container");
       Object.entries(symptomsDict).forEach(([category, symptoms]) => {
         const categoryContainer = document.createElement('div');
         categoryContainer.classList.add('category-container');
-
+  
         const categoryTitle = document.createElement('h3');
         categoryTitle.classList.add('category-title');
         categoryTitle.textContent = category;
         categoryTitle.addEventListener('click', () => {
           categorySymptomsContainer.classList.toggle('hidden');
         });
-
+  
         const categorySymptomsContainer = document.createElement('div');
         categorySymptomsContainer.classList.add('symptoms-container');
-
+  
         Object.entries(symptoms).forEach(([symptom, id]) => {
           const button = document.createElement('button');
           button.classList.add('checkbox-button');
           button.textContent = symptom;
           button.setAttribute('data-id', id);
-
+  
           button.addEventListener('click', (event) => {
             event.preventDefault();
             button.classList.toggle('selected');
-
+  
             const symptomsInput = document.getElementById("symptoms_checkboxes");
             let currentSymptoms = symptomsInput.value.split(',').map(item => item.trim()).filter(Boolean);
             const symptomName = button.textContent;
-
+  
             if (button.classList.contains('selected')) {
               if (!currentSymptoms.includes(symptomName)) {
                 currentSymptoms.push(symptomName);
@@ -562,20 +562,20 @@
             } else {
               currentSymptoms = currentSymptoms.filter(item => item !== symptomName);
             }
-
+  
             symptomsInput.value = currentSymptoms.join(', ');
             updateProceedButtonState();
           });
-
+  
           categorySymptomsContainer.appendChild(button);
         });
-
+  
         categoryContainer.appendChild(categoryTitle);
         categoryContainer.appendChild(categorySymptomsContainer);
         container.appendChild(categoryContainer);
       });
     }
-
+  
     function updateProceedButtonState() {
       const symptomsNLP = document.getElementById("symptoms_nlp").textContent.trim();
       const symptomsCheckboxes = document.getElementById("symptoms_checkboxes").value.trim();
@@ -583,29 +583,29 @@
       proceedBtn.disabled = !(symptomsNLP || symptomsCheckboxes);
       document.getElementById("hidden_symptoms_nlp").value = symptomsNLP;
     }
-
+  
     // Inline Autocompletion with Visible Suggestion
     const input = document.getElementById("symptoms_nlp");
     let currentSuggestion = '';
     let suggestionNode = null;
-
+  
     function updateAutocomplete() {
       if (suggestionNode) {
         suggestionNode.remove();
         suggestionNode = null;
       }
-
+  
       const currentValue = input.textContent;
       const words = currentValue.split(' ');
       const lastWord = words[words.length - 1].toLowerCase();
       currentSuggestion = symptomsList.find(symptom => symptom.startsWith(lastWord)) || '';
-
+  
       if (currentSuggestion && lastWord.length > 0) {
         const suggestionPart = currentSuggestion.slice(lastWord.length);
         suggestionNode = document.createElement('span');
         suggestionNode.className = 'suggestion-overlay';
         suggestionNode.textContent = suggestionPart;
-
+  
         const selection = window.getSelection();
         if (selection.rangeCount > 0) {
           const range = selection.getRangeAt(0);
@@ -621,14 +621,14 @@
       }
       updateProceedButtonState();
     }
-
+  
     input.addEventListener('input', (e) => {
       updateAutocomplete();
     });
-
+  
     input.addEventListener('keydown', (e) => {
       const currentValue = input.textContent;
-
+  
       if (e.key === 'Tab' && currentSuggestion) {
         e.preventDefault();
         const words = currentValue.split(' ');
@@ -655,7 +655,7 @@
         }
       }
     });
-
+  
     // Place cursor at the end of contenteditable
     function placeCaretAtEnd(el) {
       el.focus();
@@ -666,7 +666,24 @@
       sel.removeAllRanges();
       sel.addRange(range);
     }
-
+  
+    // Text-to-Speech Function
+    function speakOutput() {
+      if ('speechSynthesis' in window) {
+        const predictedDisease = document.querySelector('#diseaseModal .modal-body p:first-child')?.textContent || '';
+        const description = document.querySelector('#descriptionModal .modal-body p')?.textContent || '';
+        const precautions = Array.from(document.querySelectorAll('#precautionModal .modal-body ul li')).map(li => li.textContent).join('. ');
+  
+        const textToSpeak = `Predicted Disease: ${predictedDisease}. Description: ${description}. Recommended Precautions: ${precautions}`;
+        const utterance = new SpeechSynthesisUtterance(textToSpeak);
+        utterance.lang = 'en-US'; // Adjust based on user preference if needed
+        utterance.rate = 1.0; // Normal speed
+        speechSynthesis.speak(utterance);
+      } else {
+        console.log("Text-to-speech not supported in this browser.");
+      }
+    }
+  
     // Voice Recording Functionality
     let recognition;
     if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
@@ -674,16 +691,16 @@
       recognition.continuous = false;
       recognition.interimResults = false;
       let isRecording = false;
-
+  
       document.getElementById("record-btn").addEventListener('click', () => {
         if (isRecording) {
           recognition.stop();
           return;
         }
-
+  
         const language = document.getElementById("language").value;
         recognition.lang = language;
-
+  
         navigator.mediaDevices.getUserMedia({ audio: true })
           .then((stream) => {
             recognition.start();
@@ -696,11 +713,11 @@
             alert("Please allow microphone access in your browser settings.");
           });
       });
-
+  
       recognition.onstart = () => {
         console.log("Speech recognition started");
       };
-
+  
       recognition.onresult = (event) => {
         const transcript = event.results[0][0].transcript;
         document.getElementById("symptoms_nlp").textContent = transcript;
@@ -713,11 +730,11 @@
         updateProceedButtonState();
         resetRecordButton();
       };
-
+  
       recognition.onend = () => {
         resetRecordButton();
       };
-
+  
       recognition.onerror = (event) => {
         console.error("Speech recognition error:", event.error);
         let errorMessage = "Error capturing voice: " + event.error;
@@ -731,7 +748,7 @@
         alert(errorMessage);
         resetRecordButton();
       };
-
+  
       function resetRecordButton() {
         isRecording = false;
         document.getElementById("record-btn").textContent = "🎤 Record Voice";
@@ -742,20 +759,25 @@
       document.getElementById("record-btn").textContent = "🎤 Not Supported";
       document.getElementById("record-btn").style.backgroundColor = "#6c757d";
     }
-
+  
     document.addEventListener('DOMContentLoaded', () => {
       createCheckboxes(symptomsDict);
-
+  
       const proceedBtn = document.getElementById("proceed-btn");
       proceedBtn.disabled = true;
-
+  
       proceedBtn.addEventListener("click", () => {
         if (!proceedBtn.disabled) {
           document.querySelector('form').submit();
         }
       });
-
+  
       document.getElementById("symptoms_nlp").addEventListener('input', updateProceedButtonState);
+  
+      // Trigger speech when results load
+      if (document.getElementById("diseaseModal")) {
+        speakOutput();
+      }
     });
   </script>
 
