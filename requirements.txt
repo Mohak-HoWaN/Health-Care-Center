@@ -11,7 +11,7 @@ seaborn==0.13.2
 matplotlib==3.9.2
 plotly==5.24.1
 requests==2.32.3
-spacy==3.7.2
+spacy==3.7.4
 protobuf==4.25.4
-
-gunicorn
+gunicorn==20.1.0
+https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.4/en_core_sci_sm-0.5.4.tar.gz
