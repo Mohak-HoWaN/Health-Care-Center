@@ -345,26 +345,58 @@ def extract_symptoms_nlp(user_input):
     extracted_symptoms = set()
     user_input_lower = user_input.lower()
     
-    # Synonym and autocorrect mapping
+    # Comprehensive synonym mapping
     synonym_map = {
-        "tired": "fatigue",
-        "fever": "high_fever",
-        "sick": "malaise",
-        "pain": "joint_pain"
+        "itch": "itching", "rash": "skin_rash", "bumps": "nodal_skin_eruptions", "spots": "red_spots_over_body",
+        "pimples": "pus_filled_pimples", "black spots": "blackheads", "scarring": "scurring", "peeling": "skin_peeling",
+        "dusting": "silver_like_dusting", "nail dents": "small_dents_in_nails", "nail inflammation": "inflammatory_nails",
+        "sneezing": "continuous_sneezing", "shivers": "shivering", "cold": "chills", "coughing": "cough",
+        "fever": "high_fever", "short breath": "breathlessness", "mucus": "phlegm", "sore throat": "throat_irritation",
+        "runny nose": "runny_nose", "stuffy nose": "congestion", "stomachache": "stomach_pain", "heartburn": "acidity",
+        "puking": "vomiting", "loose stools": "diarrhoea", "hard stools": "constipation", "belly pain": "abdominal_pain",
+        "gut pain": "belly_pain", "no appetite": "loss_of_appetite", "upset stomach": "indigestion", "chest ache": "chest_pain",
+        "fast heartbeat": "fast_heart_rate", "joint pain": "joint_pain", "join": "joint_pain",
+        "weak muscles": "muscle_weakness", "walking pain": "painful_walking", "tired": "fatigue", "weight drop": "weight_loss",
+        "restless": "restlessness", "lazy": "lethargy", "sick": "malaise", "swollen belly": "swelling_of_stomach",
+        "one-sided weakness": "weakness_of_one_body_side", "head pain": "headache", "dizzy": "dizziness",
+        "unsteady": "loss_of_balance", "speech trouble": "slurred_speech", "mood changes": "mood_swings",
+        "nervous": "anxiety", "irritated": "irritability", "sad": "depression", "bladder pain": "bladder_discomfort",
+        "smelly urine": "foul_smell_of_urine", "urge to pee": "continuous_feel_of_urine", "spotty pee": "spotting_urination",
+        "painful pee": "pain_during_urination", "yellow pee": "yellow_urination", "hungry": "increased_appetite",
+        "sweaty": "sweating", "gaining weight": "weight_gain", "lots of pee": "polyuria",
+        "blurry vision": "blurred_and_distorted_vision", "red eyes": "redness_of_eyes", "sinus pain": "sinus_pressure",
+        "puffy eyes": "swollen_eyes", "vision issues": "visual_disturbances", "earache": "ear_pain", "ear leak": "ear_discharge",
+        "ringing": "ringing_in_ears", "swollen glands": "swelled_lymph_nodes", "no smell": "loss_of_smell",
+        "muscle ache": "muscle_pain", "fever": "high_fever", "chilly": "chills"
     }
     
-    # Multi-word symptom matching
+    # Multi-word symptom matching with flexibility
     for symptom in symptoms_dict.keys():
-        if symptom in user_input_lower:
+        if symptom.replace('_', ' ') in user_input_lower:  # Match "joint pain" in text
             extracted_symptoms.add(symptom)
     
-    # Single-word token matching with synonym/autocorrect lookup
+    # Check synonym_map phrases
+    for synonym, target in synonym_map.items():
+        if synonym in user_input_lower and target in symptoms_dict:
+            extracted_symptoms.add(target)
+    
+    # Single-word token matching with synonym lookup
     for token in doc:
         token_text = token.text
         if token_text in symptoms_dict:
             extracted_symptoms.add(token_text)
         elif token_text in synonym_map and synonym_map[token_text] in symptoms_dict:
             extracted_symptoms.add(synonym_map[token_text])
+    
+    # Additional check for multi-word symptoms with typos
+    tokens = [token.text for token in doc]
+    for i in range(len(tokens) - 1):
+        phrase = f"{tokens[i]} {tokens[i + 1]}"
+        if "join" in phrase and "pain" in phrase:  # Catch "join pain"
+            extracted_symptoms.add("joint_pain")
+        for symptom in symptoms_dict.keys():
+            if symptom.replace('_', ' ') in phrase:
+                extracted_symptoms.add(symptom)
     
     return list(extracted_symptoms) if extracted_symptoms else None
 
