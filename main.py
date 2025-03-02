@@ -24,7 +24,7 @@ svc = pickle.load(open("models/svc.pkl", 'rb'))
 nlp = spacy.load("en_core_sci_sm")
 
 app = Flask(__name__)
-CORS(app, origins="*")
+CORS(app, resources={r"/": {"origins": ""}}, supports_credentials=True)
 
 # Custom and Helper Functions
 def helper(dis):
