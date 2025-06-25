@@ -1,0 +1,195 @@
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+<style>
+  :root {
+    --primary-color: #4B9CD3;
+    --secondary-color: #66CDAA;
+    --accent-color: #3a7ca5;
+    --light-color: #f1f8f5;
+    --dark-color: #20303d;
+    --warning-color: #ff4c4c;
+    --success-color: #28a745;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .navbar {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 0.75rem 0 !important;
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    width: 100%;
+  }
+
+  .navbar .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1200px !important;
+    margin: 0 auto !important;
+    padding: 0 15px !important;
+  }
+
+  .navbar-brand {
+    font-weight: 700;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    color: white !important;
+    margin-right: 2rem;
+    text-decoration: none;
+  }
+
+  .navbar-brand .logo-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    margin-right: 10px;
+    object-fit: cover;
+    border: 2px solid white;
+  }
+
+  .navbar-toggler {
+    border: none;
+    padding: 0.5rem;
+  }
+
+  .navbar-collapse {
+    justify-content: center;
+    flex-grow: 0 !important;
+  }
+
+  .navbar-nav {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .navbar-nav .nav-item .nav-link {
+    transition: all 0.3s ease;
+    padding: 10px 15px;
+    color: white !important;
+    border-radius: 8px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+  }
+
+  .navbar-nav .nav-item .nav-link:hover,
+  .navbar-nav .nav-item .nav-link.active {
+    background-color: rgba(255, 255, 255, 0.2) !important;
+    transform: translateY(-2px);
+  }
+
+  .nav-link.active {
+    background-color: rgba(255, 255, 255, 0.3) !important;
+    font-weight: bold;
+  }
+
+  .offline-button {
+    background-color: white;
+    color: var(--dark-color);
+    border: 2px solid var(--secondary-color);
+    padding: 8px 15px;
+    border-radius: 8px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    margin-left: 1rem;
+  }
+
+  .offline-button:hover {
+    background-color: var(--secondary-color);
+    color: white;
+    transform: translateY(-2px);
+    text-decoration: none;
+  }
+
+  @media (max-width: 991px) {
+    .navbar .container {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .navbar-collapse {
+      width: 100%;
+      text-align: center;
+    }
+    .navbar-nav {
+      flex-direction: column;
+      align-items: center;
+      padding: 1rem 0;
+      gap: 10px;
+    }
+    .navbar-nav .nav-item .nav-link {
+      width: 100%;
+      justify-content: center;
+    }
+    .offline-button {
+      margin: 1rem auto;
+      width: fit-content;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .navbar-brand {
+      font-size: 1.2rem;
+    }
+    .navbar-brand .logo-img {
+      width: 35px;
+      height: 35px;
+    }
+    .navbar-nav .nav-link {
+      padding: 8px 10px;
+      font-size: 0.9rem;
+    }
+  }
+</style>
+
+<nav class="navbar navbar-expand-lg navbar-dark">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <img class="logo-img" src="{{ url_for('static', filename='img.png') }}" alt="Health Center Logo">
+      Health Care Center
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link {% if current_page == 'home' %}active{% endif %}" href="/"><i class="fas fa-home me-1"></i> Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% if current_page == 'about' %}active{% endif %}" href="/about"><i class="fas fa-info-circle me-1"></i> About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% if current_page == 'contact' %}active{% endif %}" href="/contact"><i class="fas fa-envelope me-1"></i> Contact</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% if current_page == 'developer' %}active{% endif %}" href="/developer"><i class="fas fa-code me-1"></i> Developer</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% if current_page == 'blog' %}active{% endif %}" href="/blog"><i class="fas fa-blog me-1"></i> Blog</a>
+        </li>
+      </ul>
+      <a href="/download/offline_version" download class="offline-button">
+        <i class="fas fa-download me-1"></i> Offline Version
+      </a>
+    </div>
+  </div>
+</nav>
